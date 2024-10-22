@@ -4,7 +4,7 @@ source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main
 # rc_env enviroment
 module load PrgEnv-gnu cray-mpich cudatoolkit craype-accel-nvidia80 python
 conda activate rc_env
-export MPICH_GPU_SUPPORT_ENABLED=1 
+# export MPICH_GPU_SUPPORT_ENABLED=1 
 
 # gpu test enviroment
 module load PrgEnv-gnu cray-mpich cudatoolkit craype-accel-nvidia80 python

@@ -7,7 +7,7 @@ TRACER=ELG_LOPnotqso #
 RAN_MOCK_NUM=10 # ELG: 10; LRG: 8 ;QSO: 4 
 REGION=SGC  # NGC or SGC
 MOCKS_FN=${SCRATCH}/mocks/
-PK_FN=${HOME}/project_rc/main/data/
+PK_FN=${SCRATCH}/data/pk/
 PK_RUN=${HOME}/project_rc/main/desihub/pkrun.py
 
 # use pkrun.py to calculate the power spectrum
