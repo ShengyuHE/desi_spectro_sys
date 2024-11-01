@@ -19,7 +19,7 @@ MOCK_DIR=mocks/${survey}/Abacus_${mockver}
 # the suffix of redshift column without the redsihft error
 remove_zerror=None
 
-for tp in `seq 1 1`; do
+for tp in `seq 2 2`; do
     echo -e "\nGenerate DESI ${tracers[${tp}]} mocks with spectroscopic systematics and update the FKP weight"
     if [ "$tracers[${tp}]" == "ELG_LOPnotqso" ]; then
         catas="realistic failures slitless"
@@ -41,7 +41,7 @@ for tp in `seq 1 1`; do
         echo -e "\nAll ${tracers[${tp}]} files are ready."
 
         # From the AbacusSummit mocks (as the real Universe without any selection) to LSS clustering mocks with spectroscopic systematics
-        outputs=${fn}/${tracers[${tp}]}_*_0_clustering.ran.fits
+        outputs=${fn}/${tracers[${tp}]}_clustering.dat.fits
         if [ ! -e "${outputs}" ]; then
             echo -e "Create the ${tracers[${tp}]} clustering mocks with spectroscopic systematics"
             export OMP_NUM_THREADS=16
@@ -53,6 +53,6 @@ for tp in `seq 1 1`; do
         fi
     
         # update the WEIGHT_FKP column in the LSS catalogues 
-        # echo srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py ${SCRATCH}/{survey}/altmtl${}/mock${}/LSScats/
+        srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --tracer ${tracers[${tp}]} --targDir ${fn} 
     done
 done
