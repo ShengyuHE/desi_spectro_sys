@@ -5,13 +5,13 @@ export LSSCODE=${HOME}/project_rc/jiaxi # LSS package from jiaxi, set the catast
 
 survey=Y1
 specver=iron
-mockver='v4_2'
+mockver=v4_2
 mockdir=/dvs_ro/cfs/cdirs/desi/survey/catalogs/${survey}/mocks/SecondGenMocks/AbacusSummit_${mockver}
 
 tracers=(ELG_LOPnotqso LRG QSO)
 notqso=(y n n)
 names=(ELG_LOP LRG QSO)
-nran=(10 8 2)
+nran=(10 8 4)
 
 # the directory of mocks
 MOCK_DIR=mocks/${survey}/Abacus_${mockver}
@@ -46,13 +46,13 @@ for tp in `seq 2 2`; do
             echo -e "Create the ${tracers[${tp}]} clustering mocks with spectroscopic systematics"
             export OMP_NUM_THREADS=16
             # can not use MPI (multiple tasks or nodes, error in writting files)
-            srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python ${LSSCODE}/LSS/scripts/mock_tools/mkCat_SecondGen_amtl.py --base_output ${SCRATCH}/${MOCK_DIR}/altmtl${MOCKNUM} --mockver ab_secondgen --mocknum ${MOCKNUM}  --survey ${survey} --add_gtl y --specdata Y3 --tracer ${names[${tp}]} --notqso ${notqso[${tp}]} --minr 0 --maxr ${nran[${tp}]} --fulld n --fullr n --apply_veto n --use_map_veto _HPmapcut --mkclusran y  --nz y --mkclusdat y --splitGC y --targDir ${mockdir} --outmd 'notscratch' --addcatas ${catas} --remove_zerror ${remove_zerror}
+            srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python ${LSSCODE}/LSS/scripts/mock_tools/mkCat_SecondGen_amtl.py --base_output ${SCRATCH}/${MOCK_DIR}/altmtl${MOCKNUM} --mockver ab_secondgen --mocknum ${MOCKNUM}  --survey ${survey} --add_gtl y --specdata ${specver} --tracer ${names[${tp}]} --notqso ${notqso[${tp}]} --minr 0 --maxr ${nran[${tp}]} --fulld n --fullr n --apply_veto n --use_map_veto _HPmapcut --mkclusran y  --nz y --mkclusdat y --splitGC y --targDir ${mockdir} --outmd 'notscratch' --addcatas ${catas} --remove_zerror ${remove_zerror}
         fi
         if [ -e "${outputs}" ]; then
             echo -e "${tracers[${tp}]} clustering mocks are complete"
         fi
-    
         # update the WEIGHT_FKP column in the LSS catalogues 
-        srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --tracer ${tracers[${tp}]} --targDir ${fn} 
+        # srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --tracer ${tracers[${tp}]} --targDir ${fn} 
     done
 done
+\
