@@ -1,1 +1,1 @@
-main/make_LSS/example_files/ELG_LOPnotqso_NGC_clustering.dat.fits filter=lfs diff=lfs merge=lfs -text
+main/make_LSS/example_files/ELG_LOPnotqso_NGC_clustering.dat.fits
