@@ -76,10 +76,10 @@ for tp in `seq 0 0`; do
             if [ ! -f "${outputs}" ]; then 
                 if [ ${MOCKNUM} == "0" ]; then
                     echo "calculate with window clustering ${outputs}"
-                    srun -N 4 -n 16 --exclusive -C cpu -t 04:00:00 --qos interactive --account desi python ${runDir}/pkrun.py --tracer ${tracers[${tp}]} --region NGC SGC --weight_type ${weight} --rebinning y --nran ${nran[${tp}]} --basedir ${mock_fn} --outdir ${pk_fn} --catas_type ${catas[$j]} --option elgzcatas --calc_win y
+                    srun -N 1 -n 16 --exclusive -C cpu -t 04:00:00 --qos interactive --account desi python ${runDir}/pkrun.py --tracer ${tracers[${tp}]} --region NGC SGC --weight_type ${weight} --rebinning y --nran ${nran[${tp}]} --basedir ${mock_fn} --outdir ${pk_fn} --catas_type ${catas[$j]} --option elgzcatas --calc_win y
                 else
                     echo "calculate without window clustering ${outputs}"
-                    srun -N 4 -n 16 --exclusive -C cpu -t 04:00:00 --qos interactive --account desi python ${runDir}/pkrun.py --tracer ${tracers[${tp}]} --region NGC SGC --weight_type ${weight} --rebinning y --nran ${nran[${tp}]} --basedir ${mock_fn}  --outdir ${pk_fn} --catas_type ${catas[$j]} --option elgzcatas
+                    srun -N 1 -n 16 --exclusive -C cpu -t 04:00:00 --qos interactive --account desi python ${runDir}/pkrun.py --tracer ${tracers[${tp}]} --region NGC SGC --weight_type ${weight} --rebinning y --nran ${nran[${tp}]} --basedir ${mock_fn}  --outdir ${pk_fn} --catas_type ${catas[$j]} --option elgzcatas
                 fi
             fi
         done 

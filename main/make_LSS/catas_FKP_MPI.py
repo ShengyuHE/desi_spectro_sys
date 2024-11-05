@@ -1,3 +1,8 @@
+# check the MPI
+from mpi4py import MPI
+mpicomm = MPI.COMM_WORLD
+mpiroot = 0
+
 import os
 import glob
 import time

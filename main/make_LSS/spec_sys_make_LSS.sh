@@ -19,7 +19,7 @@ MOCK_DIR=mocks/${survey}/Abacus_${mockver}
 # the suffix of redshift column without the redsihft error
 remove_zerror=None
 
-for tp in `seq 2 2`; do
+for tp in `seq 0 0`; do
     echo -e "\nGenerate DESI ${tracers[${tp}]} mocks with spectroscopic systematics and update the FKP weight"
     if [ "$tracers[${tp}]" == "ELG_LOPnotqso" ]; then
         catas="realistic failures slitless"
@@ -51,8 +51,9 @@ for tp in `seq 2 2`; do
         if [ -e "${outputs}" ]; then
             echo -e "${tracers[${tp}]} clustering mocks are complete"
         fi
-        # update the WEIGHT_FKP column in the LSS catalogues 
-        # srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --tracer ${tracers[${tp}]} --targDir ${fn} 
+        # update the WEIGHT_FKP column in the LSS catalogues
+        echo -e "\nUpdate ${tracers[${tp}]} clustering mocks FKP weight"
+        srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --region 'NGC SGC' --tracer ${tracers[${tp}]} --targDir ${fn} 
+        echo -e "${tracers[${tp}]} clustering mocks FKP weights are complete"
     done
 done
-\
