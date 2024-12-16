@@ -1,15 +1,17 @@
 # DESI enviroment
 source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main
 
-# rc_env enviroment (used for the introduction)
+# rc_env and vd_env enviroment (used for the introduction)
 module load PrgEnv-gnu cray-mpich cudatoolkit craype-accel-nvidia80 python
+# conda create -n rc_env python=3.9.20
 conda activate rc_env
-# export MPICH_GPU_SUPPORT_ENABLED=1 
+conda activate vd_env
+export MPICH_GPU_SUPPORT_ENABLED=0
 
 # gpu test enviroment
 module load PrgEnv-gnu cray-mpich cudatoolkit craype-accel-nvidia80 python
 conda activate gpu-aware-mpi
-export MPICH_GPU_SUPPORT_ENABLED=1 
+export MPICH_GPU_SUPPORT_ENABLED=1
 
 #spec_sys enviroment from jiaxi
 source /global/common/software/desi/users/adematti/cosmodesi_environment.sh main

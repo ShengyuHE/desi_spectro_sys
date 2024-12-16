@@ -14,7 +14,7 @@ names=(ELG_LOP LRG QSO)
 nran=(10 8 4)
 
 # the directory of mocks
-MOCK_DIR=mocks/${survey}/Abacus_${mockver}
+MOCK_DIR=galaxies/catalogs/${survey}/Abacus_${mockver}
 
 # the suffix of redshift column without the redsihft error
 remove_zerror=None
@@ -53,7 +53,8 @@ for tp in `seq 0 0`; do
         fi
         # update the WEIGHT_FKP column in the LSS catalogues
         echo -e "\nUpdate ${tracers[${tp}]} clustering mocks FKP weight"
-        srun -N 1 -n 1 -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --region 'NGC SGC' --tracer ${tracers[${tp}]} --targDir ${fn} 
+        # srun -N 1 -n 1 -C cpu -t 04:00:00 --qos interactive --exclusive --account desi python catas_FKP.py --region 'NGC SGC' --tracer ${tracers[${tp}]} --targDir ${fn} --addcatas ${catas} --parallel 'n'
+        srun -N 2 -n ${nran[${tp}]} -c 16 -C cpu -t 04:00:00 --qos interactive --account desi python catas_FKP.py --region 'NGC SGC' --tracer ${tracers[${tp}]} --targDir ${fn} --addcatas ${catas} --parallel 'y'
         echo -e "${tracers[${tp}]} clustering mocks FKP weights are complete"
     done
 done
